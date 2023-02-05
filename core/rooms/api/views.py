@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, DestroyAPIView
 from .serializers import BookingSerializer, EventSerializer, RoomSerializer
 from rooms.models import Booking, Event, Room
 
@@ -16,3 +16,9 @@ class EventView(CreateAPIView):
 class BookingView(CreateAPIView):
     serializer_class = BookingSerializer
     queryset = Booking.objects.all()
+
+
+class CancelBookingView(DestroyAPIView):
+    serializer_class = BookingSerializer
+    queryset = Booking.objects.all()
+    lookup_field = "id"
