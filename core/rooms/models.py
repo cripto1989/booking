@@ -10,7 +10,7 @@ class Room(TimeStampedModel):
     capacity = models.SmallIntegerField(default=1)
 
     def __str__(self) -> str:
-        return f"{self.id} with capacity {self.capacity}"
+        return f"{self.id}({self.capacity})"
 
 
 class EventType(Enum):
@@ -28,7 +28,7 @@ class Event(TimeStampedModel):
     type = models.CharField(max_length=10, choices=EventType.choices(), default=EventType.PUBLIC)
 
     def __str__(self) -> str:
-        return f"{self.id} in room {self.room.id}"
+        return f"{self.id}({self.type})"
 
 
 class BookingStatus(Enum):
@@ -47,4 +47,4 @@ class Booking(TimeStampedModel):
     status = models.CharField(max_length=10, choices=BookingStatus.choices(), default=BookingStatus.ACTIVE)
 
     def __str__(self) -> str:
-        return f"Event {self.event.id} for user {self.customer.username}"
+        return f"{self.id}"
