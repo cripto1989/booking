@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import BookingSerializer, EventSerializer, RoomSerializer
 from rooms.models import Booking, Event, Room, EventType
+from rooms.api.permissions import IsOwnerOfBooking
 
 
 class RoomView(CreateAPIView):
@@ -39,4 +40,5 @@ class BookingView(CreateAPIView):
 class CancelBookingView(DestroyAPIView):
     serializer_class = BookingSerializer
     queryset = Booking.objects.all()
+    permission_classes = [IsOwnerOfBooking]
     lookup_field = "id"

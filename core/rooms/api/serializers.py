@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 from rooms.models import Booking, Event, Room, EventType, BookingStatus
 
@@ -19,6 +20,13 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields = "__all__"
+
+    def validate_room(self, data):
+        start_date = timezone.now().replace(hour=0, minute=0, second=0)
+        end_date = timezone.now().replace(hour=23, minute=59, second=59)                
+        if Event.objects.filter(created__gte=start_date, created__lte=end_date):
+            raise serializers.ValidationError("You can create events just one per day")
+        return data
 
 
 class BookingSerializer(serializers.ModelSerializer):
