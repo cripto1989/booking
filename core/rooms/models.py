@@ -24,7 +24,7 @@ class EventType(Enum):
 class Event(TimeStampedModel):
     id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
     room = models.ForeignKey("Room", on_delete=models.CASCADE)
-    models.CharField(max_length=10, choices=EventType.choices())
+    type = models.CharField(max_length=10, choices=EventType.choices(), default=EventType.PUBLIC)
 
     def __str__(self) -> str:
         return f"{self.id} in room {self.room.id}"
