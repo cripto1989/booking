@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from rooms.models import Event, Room
+from rooms.models import Booking, Event, Room
 
 
 class RoomSerializer(serializers.ModelSerializer):
@@ -13,4 +13,11 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
+        fields = "__all__"
+
+
+class BookingSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Booking
         fields = "__all__"
