@@ -39,4 +39,4 @@ class Booking(TimeStampedModel):
     status = models.CharField(max_length=10, choices=BookingStatus.choices, default=BookingStatus.ACTIVE)
 
     def __str__(self) -> str:
-        return f"{self.id}"
+        return f"{self.id}({self.customer.username})"

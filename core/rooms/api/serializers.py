@@ -34,6 +34,7 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Booking
         fields = "__all__"
+        read_only_fields = ["customer", ]    
 
     def validate_event(self, value):        
         if value.type.title() == Event.EventType.PRIVATE.value:

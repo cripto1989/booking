@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .serializers import BookingSerializer, EventSerializer, RoomSerializer
 from rooms.models import Booking, Event, Room
-from rooms.api.permissions import IsOwnerOfBooking
+from rooms.api.permissions import CanBooking, IsOwnerOfBooking
 
 
 class RoomView(CreateAPIView):
@@ -29,12 +29,19 @@ class EventView(CreateAPIView):
 
 class EventsView(ListAPIView):
     serializer_class = EventSerializer
-    queryset = Event.objects.filter(type=Event.EventType.PUBLIC.value.upper())
+    queryset = Event.objects.filter(type=Event.EventType.PUBLIC)
 
 
 class BookingView(CreateAPIView):
     serializer_class = BookingSerializer
     queryset = Booking.objects.all()
+    permission_classes = [CanBooking]
+
+    def create(self, request, *args, **kwargs):        
+        serializer = BookingSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(customer=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CancelBookingView(DestroyAPIView):
