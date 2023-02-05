@@ -2,7 +2,7 @@ from rest_framework.generics import CreateAPIView, DestroyAPIView, ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import BookingSerializer, EventSerializer, RoomSerializer
-from rooms.models import Booking, Event, Room, EventType
+from rooms.models import Booking, Event, Room
 from rooms.api.permissions import IsOwnerOfBooking
 
 
@@ -29,7 +29,7 @@ class EventView(CreateAPIView):
 
 class EventsView(ListAPIView):
     serializer_class = EventSerializer
-    queryset = Event.objects.filter(type=EventType.PUBLIC.value.upper())
+    queryset = Event.objects.filter(type=Event.EventType.PUBLIC.value.upper())
 
 
 class BookingView(CreateAPIView):
