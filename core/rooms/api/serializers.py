@@ -21,12 +21,12 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = "__all__"
 
-    def validate_room(self, data):
+    def validate_room(self, value):        
         start_date = timezone.now().replace(hour=0, minute=0, second=0)
         end_date = timezone.now().replace(hour=23, minute=59, second=59)                
-        if Event.objects.filter(created__gte=start_date, created__lte=end_date):
+        if Event.objects.filter(room=value, created__gte=start_date, created__lte=end_date):
             raise serializers.ValidationError("You can create events just one per day")
-        return data
+        return value
 
 
 class BookingSerializer(serializers.ModelSerializer):
