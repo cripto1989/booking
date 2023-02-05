@@ -2,6 +2,7 @@ import uuid
 from enum import Enum
 from django.db import models
 from model_utils.models import TimeStampedModel
+from django.contrib.auth.models import User
 
 
 class Room(TimeStampedModel):
@@ -28,3 +29,22 @@ class Event(TimeStampedModel):
 
     def __str__(self) -> str:
         return f"{self.id} in room {self.room.id}"
+
+
+class BookingStatus(Enum):
+    ACTIVE = "Active"
+    CANCELED = "Canceled"
+
+    @classmethod
+    def choices(cls):
+        return [(booking_status.name, booking_status.value) for booking_status in cls]
+
+
+class Booking(TimeStampedModel):
+    id = models.UUIDField(primary_key = True, default = uuid.uuid4, editable = False)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey("Event", on_delete=models.CASCADE)
+    status = models.CharField(max_length=10, choices=BookingStatus.choices(), default=BookingStatus.ACTIVE)
+
+    def __str__(self) -> str:
+        return f"Event {self.event.id} for user {self.customer.username}"
