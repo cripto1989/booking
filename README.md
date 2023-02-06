@@ -1,10 +1,10 @@
 # Booking project
 
-
-1. [Configuration](#configuration)
+1. [Requirements](#requirements)
+2. [Configuration](#configuration)
     * [Installing dependencies](#installing-dependencies)
     * [Running project](#running-project)
-2. [Endpoints](#endpoints)
+3. [Endpoints](#endpoints)
     * [Create a room](#create-a-room)
     * [Delete a room](#delete-a-room)
     * [Create an event](#create-an-event)
@@ -12,11 +12,16 @@
     * [Create a booking](#create-a-booking)
     * [Cancel a booking](#cancel-a-booking)
 
+## Requirements
+- Python 3.9.16
+- Sqlite
+- Pyenv
+
 ## Configuration
 Feel free to use wathever tools to manage a virtual environment such as pipenv, pyenv-virtualenv, poetry and so on. For this project pyenv was used.
 
 ### Installing dependencies
-To install all packages use the next command
+After activating a virtualenv use the next command to install all dependency package
 ```
 pip install -r requirements/requirements.txt -r requirements/requirements-test.txt
 ```
