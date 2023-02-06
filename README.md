@@ -11,6 +11,7 @@
     * [List all events](#list-all-events)
     * [Create a booking](#create-a-booking)
     * [Cancel a booking](#cancel-a-booking)
+4. [Running tests](#running-tests)
 
 ## Requirements
 - Python 3.9.16
@@ -68,3 +69,8 @@ All available endpoints
 
 ### Cancel a booking
 `DELETE /api/v1.0/booking/cancel/ec85b4e2-7b8c-49c7-9f03-546c4f49b760/`
+
+## Running tests
+```
+pytest
+```
