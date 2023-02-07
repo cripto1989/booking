@@ -9,18 +9,22 @@ from rooms.api.permissions import CanBooking, IsOwnerOfBooking
 class RoomView(CreateAPIView):
     serializer_class = RoomSerializer
     queryset = Room.objects.all()
-     
+
 
 class DeleteRoomView(DestroyAPIView):
     serializer_class = RoomSerializer
-    queryset = Room.objects.all()    
+    queryset = Room.objects.all()
     lookup_field = "id"
 
     def destroy(self, request, *args, **kwargs):
         room = self.get_object()
         if room.event_set.all():
-            return Response({"message": "There is at least an event related to this room"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"message": "There is at least an event related to this room"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         return super().destroy(request, *args, **kwargs)
+
 
 class EventView(CreateAPIView):
     serializer_class = EventSerializer
@@ -37,7 +41,7 @@ class BookingView(CreateAPIView):
     queryset = Booking.objects.all()
     permission_classes = [CanBooking]
 
-    def create(self, request, *args, **kwargs):        
+    def create(self, request, *args, **kwargs):
         serializer = BookingSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(customer=request.user)
